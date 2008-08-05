@@ -1,0 +1,49 @@
+nagios-sms
+----------
+
+ * Requires that PEAR is included in your php include_path
+ * Requires that SMS_Clickatell is installed from
+   http://www.powertrip.co.za/PEAR/SMS_Clickatell/
+ * Requires the following standard PEAR modules:
+     - PEAR
+     - Console_Getopt
+ * You will need a Clickatell account in order to receive notifications
+   from them.
+
+Under the contacts in contacts.cfg you add an options for
+service_notification_commands and host_notification_commands the following:
+
+service_notification_commands   notify-by-email,service_notify_with_sms
+host_notification_commands      host-notify-by-email,host_notify_with_sms
+
+Now specify a pager option with your cellphone number.
+
+The contact should look similar to:
+
+define contact{
+        contact_name                    joe
+        alias                           Joe Soap
+        service_notification_period     24x7
+        host_notification_period        24x7
+        service_notification_options    w,u,c,r
+        host_notification_options       d,r
+        service_notification_commands   notify-by-email,service_notify_with_sms
+        host_notification_commands      host-notify-by-email,host_notify_with_sms
+        pager                           27821234567
+        email                           joe@example.com
+        }
+
+In misccommands.cfg add:
+------------------------
+
+# 'service_notify_with_sms' command definition
+define command{
+        command_name service_notify_with_sms
+        command_line /usr/local/bin/sendsms.php -d $CONTACTPAGER$ -m '$NOTIFICATIONTYPE$: $HOSTNAME$ is $SERVICESTATE$ ($SERVICEOUTPUT$)'
+}
+
+# 'host_notify_with_sms' command definition
+define command{
+        command_name host_notify_with_sms
+        command_line /usr/local/bin/sendsms.php -d $CONTACTPAGER$ -m '$NOTIFICATIONTYPE$: $HOSTNAME$ is $HOSTSTATE$ ($HOSTOUTPUT$)'
+}
