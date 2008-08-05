@@ -10,6 +10,11 @@ nagios-sms
  * You will need a Clickatell account in order to receive notifications
    from them.
 
+ * Update sendsms.php with your login credentials for Clickatell if you want
+   to send SMS messages.  You can register for an account with Clickatell by
+   clicking on the following link (http://tinyurl.com/clickatell) in order
+   to sign up for an HTTP/S API account and purchase SMS Credits.
+
 Under the contacts in contacts.cfg you add an options for
 service_notification_commands and host_notification_commands the following:
 
