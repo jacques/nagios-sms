@@ -4,9 +4,8 @@
  * Send SMS Messages via Clickatell
  *
  * @author      Jacques Marneweck <jacques@php.net>
- * @copyright   2003-2007 Jacques Marneweck.  All rights strictly reserved.
+ * @copyright   2003-2008 Jacques Marneweck.  All rights strictly reserved.
  * @package     SMS_Clickatell
- * @version     $Id: sendsms.php 2 2007-11-11 15:03:14Z jacques $
  */
 
 require_once 'PEAR.php';
@@ -43,7 +42,6 @@ $climsgid = md5(md5(uniqid(mt_rand(), true)) .
                 md5(uniqid(`hostname`)));
 $sent = $sms->sendmsg (
     array (
-        'from' => 'NOSTROMO',
         'to' => $options['d'],
         'text' => $options['m'],
         'msg_type' => 'SMS_TEXT',
